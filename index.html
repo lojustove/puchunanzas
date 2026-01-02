@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Puchunanzas - Tu Budget Personal</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <span class="logo-icon">💰</span>
+                    <h1>Puchunanzas</h1>
+                </div>
+                <div class="header-actions">
+                    <span class="date-display" id="currentDate"></span>
+                    <button class="btn-refresh" id="btnRefresh" title="Actualizar datos">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M23 4v6h-6M1 20v-6h6M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Summary Cards -->
+            <section class="summary-section">
+                <div class="summary-card income">
+                    <div class="card-icon">📈</div>
+                    <div class="card-content">
+                        <span class="card-label">Ingresos Totales</span>
+                        <span class="card-value" id="totalIngresos">$0.00</span>
+                    </div>
+                </div>
+                <div class="summary-card expenses">
+                    <div class="card-icon">💸</div>
+                    <div class="card-content">
+                        <span class="card-label">Gastos Totales</span>
+                        <span class="card-value" id="totalGastos">$0.00</span>
+                    </div>
+                </div>
+                <div class="summary-card balance">
+                    <div class="card-icon">⚖️</div>
+                    <div class="card-content">
+                        <span class="card-label">Balance Mensual</span>
+                        <span class="card-value" id="balanceMensual">$0.00</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Budget Categories -->
+            <section class="budget-section">
+                <h2 class="section-title">Presupuesto Variable</h2>
+                <div class="budget-grid" id="budgetGrid">
+                    <!-- Budget cards will be inserted here -->
+                </div>
+            </section>
+
+            <!-- Calculator Section -->
+            <section class="calculator-section">
+                <h2 class="section-title">💳 Calculadora de Gastos</h2>
+                <div class="calculator-card">
+                    <div class="calculator-form">
+                        <div class="form-group">
+                            <label for="montoInput">¿Cuánto vas a gastar?</label>
+                            <div class="input-wrapper">
+                                <span class="currency-symbol">$</span>
+                                <input type="number" id="montoInput" placeholder="0.00" step="0.01" min="0">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="categoriaSelect">Categoría</label>
+                            <select id="categoriaSelect">
+                                <option value="">Selecciona una categoría</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="descripcionInput">Descripción (opcional)</label>
+                            <input type="text" id="descripcionInput" placeholder="¿En qué lo gastaste?">
+                        </div>
+                    </div>
+
+                    <!-- Budget Status Indicator -->
+                    <div class="budget-status" id="budgetStatus">
+                        <div class="status-icon">🤔</div>
+                        <div class="status-message">Ingresa un monto y categoría para verificar</div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="calculator-actions">
+                        <button class="btn btn-secondary" id="btnClear">Limpiar</button>
+                        <button class="btn btn-primary" id="btnRegister" disabled>Registrar Gasto</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Recent Expenses Journal -->
+            <section class="journal-section">
+                <h2 class="section-title">📔 Journal de Gastos</h2>
+                <div class="journal-card">
+                    <div class="journal-list" id="journalList">
+                        <div class="journal-empty">
+                            <span class="empty-icon">📝</span>
+                            <p>No hay gastos registrados este mes</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Loading Overlay -->
+        <div class="loading-overlay" id="loadingOverlay">
+            <div class="loading-spinner"></div>
+            <p>Cargando datos...</p>
+        </div>
+
+        <!-- Toast Notifications -->
+        <div class="toast-container" id="toastContainer"></div>
+
+        <!-- Setup Modal -->
+        <div class="modal" id="setupModal">
+            <div class="modal-content">
+                <h2>⚙️ Configuración Inicial</h2>
+                <p>Para conectar con tu Google Sheet, necesitas configurar el Apps Script.</p>
+                <div class="form-group">
+                    <label for="scriptUrl">URL del Apps Script desplegado:</label>
+                    <input type="text" id="scriptUrl" placeholder="https://script.google.com/macros/s/...">
+                </div>
+                <div class="modal-actions">
+                    <button class="btn btn-secondary" id="btnUseMock">Usar Datos de Prueba</button>
+                    <button class="btn btn-primary" id="btnSaveConfig">Guardar Configuración</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
